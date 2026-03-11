@@ -35,10 +35,10 @@ class FaceFrame {
   ///
   /// The map keys match the Kotlin serialization in FaceLandmarkerEngine.
   factory FaceFrame.fromMap(Map<String, dynamic> map) {
-    final bbox = map['faceBoundingBox'] as Map<String, dynamic>;
-    final pose = map['poseAngles'] as Map<String, dynamic>;
-    final qualityMap = map['quality'] as Map<String, dynamic>;
-    final rawBlendshapes = map['blendshapes'] as Map<String, dynamic>;
+    final bbox = Map<String, dynamic>.from(map['faceBoundingBox'] as Map);
+    final pose = Map<String, dynamic>.from(map['poseAngles'] as Map);
+    final qualityMap = Map<String, dynamic>.from(map['quality'] as Map);
+    final rawBlendshapes = Map<String, dynamic>.from(map['blendshapes'] as Map);
     final rawLandmarks = map['landmarks'] as List<dynamic>?;
 
     return FaceFrame(
@@ -81,9 +81,9 @@ class FaceFrame {
     return [
       for (final point in raw)
         FaceLandmark(
-          x: ((point as Map<String, dynamic>)['x'] as num).toDouble(),
-          y: (point['y'] as num).toDouble(),
-          z: (point['z'] as num).toDouble(),
+          x: ((Map<String, dynamic>.from(point as Map))['x'] as num).toDouble(),
+          y: ((point as Map)['y'] as num).toDouble(),
+          z: ((point as Map)['z'] as num).toDouble(),
         ),
     ];
   }
