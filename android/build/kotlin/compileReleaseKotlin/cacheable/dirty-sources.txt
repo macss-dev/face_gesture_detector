@@ -1,3 +1,0 @@
-D:\source\macss-dev\face_gesture_detector\android\src\main\kotlin\dev\macss\face_gesture_detector\EulerAngleCalculator.kt
-D:\source\macss-dev\face_gesture_detector\android\src\main\kotlin\dev\macss\face_gesture_detector\FaceFrameStreamHandler.kt
-D:\source\macss-dev\face_gesture_detector\android\src\main\kotlin\dev\macss\face_gesture_detector\FaceGestureDetectorPlugin.kt
