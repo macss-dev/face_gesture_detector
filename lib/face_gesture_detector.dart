@@ -34,6 +34,7 @@ export 'src/platform/method_channel_face_gesture_detector.dart';
 
 // Recognizer
 export 'src/recognizer/blink_recognizer.dart';
+export 'src/recognizer/brow_recognizer.dart';
 export 'src/recognizer/face_gesture_recognizer.dart';
 export 'src/recognizer/face_presence_recognizer.dart';
 export 'src/recognizer/head_nod_recognizer.dart';
