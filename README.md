@@ -10,6 +10,7 @@ A Flutter widget that translates camera frames and MediaPipe facial landmarks in
 - **Temporal logic** — Sustained-duration thresholds, cycle detection, state-transition filtering
 - **FaceGestureDetectorController** — Imperative pause / resume / reset
 - **Configurable** — All thresholds and durations via `FaceGestureConfiguration`
+- **Native Android** — MediaPipe Face Landmarker with GPU delegate, single-slot backpressure, Euler angle extraction
 
 ## Quick Start
 
@@ -66,12 +67,12 @@ See [docs/architecture.md](docs/architecture.md) for full details.
 
 ## Status
 
-> **v0.1.0-dev** — Dart layers (1-4) complete. Native layer (5) pending.
+> **v0.1.0-dev** — Dart layers (1-4) and Android native layer (5) complete. iOS pending.
 
 - [x] Data model with 52 blendshapes, landmarks, pose angles
-- [x] Platform interface (MethodChannel + EventChannel)
+- [x] Platform interface (MethodChannel + EventChannel + processFrame)
 - [x] 10 recognizers with full test coverage
 - [x] Layer 2 widget with frame routing, recognizer diff, controller
 - [x] Layer 1 facade with callback-to-recognizer mapping
-- [ ] Native Android (MediaPipe Face Landmarker)
+- [x] Native Android — MediaPipe Face Landmarker (LIVE_STREAM + GPU delegate)
 - [ ] Native iOS
