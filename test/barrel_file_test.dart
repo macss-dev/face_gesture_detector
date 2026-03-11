@@ -4,8 +4,6 @@ import 'package:face_gesture_detector/face_gesture_detector.dart';
 
 void main() {
   test('barrel file exports all model types', () {
-    // If any of these types were missing from the barrel file,
-    // this test would fail to compile.
     expect(FaceBlendshape.values, isNotEmpty);
     expect(FaceFrame, isNotNull);
     expect(FaceLandmark, isNotNull);
@@ -30,7 +28,35 @@ void main() {
     expect(HeadNodDirection.values, isNotEmpty);
   });
 
-  test('barrel file exports configuration', () {
+  test('barrel file exports configuration and controller', () {
     expect(FaceGestureConfiguration, isNotNull);
+    expect(FaceGestureDetectorController, isNotNull);
+  });
+
+  test('barrel file exports platform layer', () {
+    expect(FaceDetectionOptions, isNotNull);
+    expect(FrameData, isNotNull);
+    expect(FaceGestureDetectorPlatform, isNotNull);
+    expect(MethodChannelFaceGestureDetector, isNotNull);
+  });
+
+  test('barrel file exports all recognizers', () {
+    expect(FaceGestureRecognizer, isNotNull);
+    expect(FaceGestureRecognizerFactory, isNotNull);
+    expect(BlinkRecognizer, isNotNull);
+    expect(BrowRecognizer, isNotNull);
+    expect(FacePresenceRecognizer, isNotNull);
+    expect(HeadNodRecognizer, isNotNull);
+    expect(HeadTurnRecognizer, isNotNull);
+    expect(MouthRecognizer, isNotNull);
+    expect(PoseRecognizer, isNotNull);
+    expect(QualityGateRecognizer, isNotNull);
+    expect(RawFrameRecognizer, isNotNull);
+    expect(SmileRecognizer, isNotNull);
+  });
+
+  test('barrel file exports widget layer', () {
+    expect(RawFaceGestureDetector, isNotNull);
+    expect(FaceGestureDetector, isNotNull);
   });
 }
