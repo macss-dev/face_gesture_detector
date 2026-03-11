@@ -34,6 +34,7 @@ configure<com.android.build.gradle.LibraryExtension> {
     defaultConfig {
         minSdk = 24
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles("consumer-rules.pro")
     }
 }
 
