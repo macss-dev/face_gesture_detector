@@ -38,6 +38,7 @@ export 'src/platform/method_channel_face_gesture_detector.dart';
 export 'src/recognizer/blink_recognizer.dart';
 export 'src/recognizer/brow_recognizer.dart';
 export 'src/recognizer/face_gesture_recognizer.dart';
+export 'src/recognizer/face_gesture_recognizer_factory.dart';
 export 'src/recognizer/face_presence_recognizer.dart';
 export 'src/recognizer/head_nod_recognizer.dart';
 export 'src/recognizer/head_turn_recognizer.dart';
@@ -46,3 +47,6 @@ export 'src/recognizer/pose_recognizer.dart';
 export 'src/recognizer/quality_gate_recognizer.dart';
 export 'src/recognizer/raw_frame_recognizer.dart';
 export 'src/recognizer/smile_recognizer.dart';
+
+// Widget
+export 'src/widget/raw_face_gesture_detector.dart';
