@@ -30,3 +30,4 @@ export 'src/model/details/smile_details.dart';
 // Platform DTOs
 export 'src/platform/face_detection_options.dart';
 export 'src/platform/face_gesture_detector_platform_interface.dart';
+export 'src/platform/method_channel_face_gesture_detector.dart';
