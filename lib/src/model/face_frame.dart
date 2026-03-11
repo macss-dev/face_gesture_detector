@@ -80,11 +80,14 @@ class FaceFrame {
   static List<FaceLandmark> _parseLandmarks(List<dynamic> raw) {
     return [
       for (final point in raw)
-        FaceLandmark(
-          x: ((Map<String, dynamic>.from(point as Map))['x'] as num).toDouble(),
-          y: ((point as Map)['y'] as num).toDouble(),
-          z: ((point as Map)['z'] as num).toDouble(),
-        ),
+        () {
+          final m = Map<String, dynamic>.from(point as Map);
+          return FaceLandmark(
+            x: (m['x'] as num).toDouble(),
+            y: (m['y'] as num).toDouble(),
+            z: (m['z'] as num).toDouble(),
+          );
+        }(),
     ];
   }
 }
