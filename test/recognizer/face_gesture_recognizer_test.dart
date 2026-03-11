@@ -22,7 +22,7 @@ class _TestRecognizer extends FaceGestureRecognizer {
 }
 
 void main() {
-  FaceFrame _syntheticFrame({bool isFaceDetected = true}) {
+  FaceFrame syntheticFrame({bool isFaceDetected = true}) {
     return FaceFrame(
       timestamp: Duration.zero,
       isFaceDetected: isFaceDetected,
@@ -40,7 +40,7 @@ void main() {
       final config = FaceGestureConfiguration();
       final recognizer = _TestRecognizer(config);
 
-      recognizer.addFaceFrame(_syntheticFrame());
+      recognizer.addFaceFrame(syntheticFrame());
       expect(recognizer.addFaceFrameCount, 1);
 
       recognizer.reset();

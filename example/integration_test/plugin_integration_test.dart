@@ -15,11 +15,14 @@ import 'package:face_gesture_detector/face_gesture_detector.dart';
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  testWidgets('getPlatformVersion test', (WidgetTester tester) async {
-    final FaceGestureDetector plugin = FaceGestureDetector();
-    final String? version = await plugin.getPlatformVersion();
-    // The version string depends on the host platform running the test, so
-    // just assert that some non-empty string is returned.
-    expect(version?.isNotEmpty, true);
+  testWidgets('startDetection does not throw', (WidgetTester tester) async {
+    final platform = FaceGestureDetectorPlatform.instance;
+    final options = FaceDetectionOptions.fromConfiguration(
+      FaceGestureConfiguration(),
+    );
+
+    // Should complete without throwing.
+    await platform.startDetection(options);
+    await platform.stopDetection();
   });
 }

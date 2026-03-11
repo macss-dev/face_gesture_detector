@@ -5,7 +5,7 @@
 /// ```dart
 /// import 'package:face_gesture_detector/face_gesture_detector.dart';
 /// ```
-library face_gesture_detector;
+library;
 
 export 'src/configuration/face_gesture_configuration.dart';
 

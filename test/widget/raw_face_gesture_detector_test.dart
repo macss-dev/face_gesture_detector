@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:face_gesture_detector/face_gesture_detector.dart';
@@ -80,7 +78,6 @@ void main() {
 
     testWidgets('dispatches frames to all recognizers', (tester) async {
       final factoryA = _TestRecognizerFactory(config);
-      final factoryB = _TestRecognizerFactory(config);
 
       final widget = RawFaceGestureDetector(
         configuration: config,
@@ -105,7 +102,6 @@ void main() {
     });
 
     testWidgets('applies frame skipping', (tester) async {
-      final factory = _TestRecognizerFactory(config);
       final configWithSkip = FaceGestureConfiguration(frameSkipCount: 2);
       final factorySkip = _TestRecognizerFactory(configWithSkip);
 
@@ -178,7 +174,6 @@ void main() {
 
     testWidgets('disposes removed recognizers on rebuild', (tester) async {
       final factoryA = _TestRecognizerFactory(config);
-      final factoryB = _TestRecognizerFactory(config);
 
       // Initial build with factoryA
       await tester.pumpWidget(
