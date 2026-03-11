@@ -4,6 +4,21 @@ All notable changes to this project will be documented in this file.
 The format loosely follows [Keep a Changelog](https://keepachangelog.com/)
 and the project adheres to [Semantic Versioning](https://semver.org/).
 
+## 0.2.0
+
+### Added
+- **Camera integration**: `FaceGestureDetector` accepts an optional `cameraController` parameter, wiring the full camera → native → recognizer pipeline automatically
+- **Real-time detection**: `RawFaceGestureDetector` manages `startDetection`, `processFrame`, `faceFrameStream`, and `stopDetection` lifecycle when a `CameraController` is provided
+- **Example app**: Fully functional demo with live front-camera preview, face detection indicator, event log, and all 10 gesture callbacks
+- **Integration tests**: Camera pipeline tests on physical device (camera init, processFrame, faceFrameStream)
+
+### Changed
+- `cameraController` parameter added to `FaceGestureDetector` and `RawFaceGestureDetector` (optional — `null` preserves test/manual mode)
+- `camera: ^0.11.1` added as a dependency
+- Example app requires `android.permission.CAMERA`
+
+---
+
 ## 0.1.0-dev
 
 ### Added
