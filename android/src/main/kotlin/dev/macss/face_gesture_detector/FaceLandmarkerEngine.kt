@@ -28,6 +28,7 @@ class FaceLandmarkerEngine(
 
     private var landmarker: FaceLandmarker? = null
     private var includeLandmarks = false
+    @Volatile private var currentRotation: Int = 0
 
     /**
      * Initializes the FaceLandmarker with the given detection options.
@@ -68,7 +69,8 @@ class FaceLandmarkerEngine(
      * construction. If a previous frame is still being processed, MediaPipe
      * drops the new one automatically (LIVE_STREAM mode behavior).
      */
-    fun detectAsync(image: MPImage, timestampMs: Long) {
+    fun detectAsync(image: MPImage, timestampMs: Long, rotation: Int = 0) {
+        currentRotation = rotation
         landmarker?.detectAsync(image, timestampMs)
     }
 
@@ -133,7 +135,7 @@ class FaceLandmarkerEngine(
         val maxY = ys.max()
 
         // Euler angles from the 4×4 transformation matrix
-        val (pitch, yaw, roll) = if (matrix != null) {
+        val (rawPitch, rawYaw, rawRoll) = if (matrix != null) {
             // MediaPipe Matrix stores 16 floats in row-major order.
             // EulerAngleCalculator expects column-major, so we transpose.
             val flatMatrix = FloatArray(16)
@@ -146,6 +148,13 @@ class FaceLandmarkerEngine(
         } else {
             Triple(0.0, 0.0, 0.0)
         }
+
+        // MediaPipe computes angles in the raw image coordinate system.
+        // Compensate for camera sensor orientation so angles are relative
+        // to the device's portrait orientation.
+        val (pitch, yaw, roll) = correctAnglesForRotation(
+            rawPitch, rawYaw, rawRoll, currentRotation,
+        )
 
         // Blendshape map: name → score
         val blendshapeMap = mutableMapOf<String, Double>()
@@ -196,5 +205,31 @@ class FaceLandmarkerEngine(
                 "sharpness" to 100.0, // TODO M3.7: compute Laplacian variance
             ),
         )
+    }
+
+    /**
+     * Transforms Euler angles from raw-image coordinates to device-portrait
+     * coordinates, compensating for camera sensor orientation.
+     *
+     * The camera sensor produces frames rotated [sensorOrientation]° CW from
+     * portrait. The image content is therefore (360 − sensorOrientation)° CW
+     * from upright. Pitch and yaw (rotations around X/Y) are remapped using
+     * the 2-D rotation inverse, and the roll offset is subtracted.
+     */
+    private fun correctAnglesForRotation(
+        pitch: Double, yaw: Double, roll: Double, sensorOrientation: Int,
+    ): Triple<Double, Double, Double> {
+        val alpha = ((360 - sensorOrientation) % 360 + 360) % 360
+        val (cp, cy, cr) = when (alpha) {
+            90  -> Triple(-yaw, -pitch, roll - 90.0)
+            180 -> Triple(-pitch, -yaw, roll - 180.0)
+            270 -> Triple(yaw, pitch, roll - 270.0)
+            else -> Triple(pitch, yaw, roll)
+        }
+        // Normalise roll to [−180, 180]
+        var nr = cr % 360.0
+        if (nr > 180.0) nr -= 360.0
+        if (nr < -180.0) nr += 360.0
+        return Triple(cp, cy, nr)
     }
 }

@@ -54,8 +54,8 @@ class FaceGestureConfiguration {
 
   const FaceGestureConfiguration({
     this.faceDetectionConfidence = 0.5,
-    this.minDistanceRatio = 0.20,
-    this.maxDistanceRatio = 0.60,
+    this.minDistanceRatio = 0.05,
+    this.maxDistanceRatio = 0.40,
     this.headTurnYawThreshold = 25.0,
     this.headNodPitchThreshold = 20.0,
     this.blinkThreshold = 0.35,

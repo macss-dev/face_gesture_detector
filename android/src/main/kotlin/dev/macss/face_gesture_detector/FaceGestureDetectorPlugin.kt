@@ -96,8 +96,9 @@ class FaceGestureDetectorPlugin : FlutterPlugin, MethodCallHandler {
         }
 
         val timestamp = call.argument<Long>("timestamp") ?: System.currentTimeMillis()
+        val rotation = call.argument<Int>("rotation") ?: 0
 
-        frameBuffer.deposit(RawFrame(bytes, width, height, timestamp))
+        frameBuffer.deposit(RawFrame(bytes, width, height, timestamp, rotation))
         scheduleProcessing()
 
         // Return immediately — processing happens on the background executor.
@@ -109,7 +110,7 @@ class FaceGestureDetectorPlugin : FlutterPlugin, MethodCallHandler {
         backgroundExecutor.submit {
             val rawFrame = frameBuffer.acquire() ?: return@submit
             val mpImage = FrameDecoder.decode(rawFrame.bytes, rawFrame.width, rawFrame.height)
-            engine?.detectAsync(mpImage, rawFrame.timestampMs)
+            engine?.detectAsync(mpImage, rawFrame.timestampMs, rawFrame.rotation)
         }
     }
 
@@ -131,4 +132,5 @@ private data class RawFrame(
     val width: Int,
     val height: Int,
     val timestampMs: Long,
+    val rotation: Int,
 )
