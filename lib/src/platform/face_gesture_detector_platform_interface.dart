@@ -39,6 +39,14 @@ abstract class FaceGestureDetectorPlatform extends PlatformInterface {
     throw UnimplementedError('stopDetection() has not been implemented.');
   }
 
+  /// Sends a raw camera frame to the native pipeline for processing.
+  ///
+  /// Non-blocking on the native side — the frame is deposited in a
+  /// single-slot buffer and picked up by a background thread.
+  Future<void> processFrame(FrameData frameData) {
+    throw UnimplementedError('processFrame() has not been implemented.');
+  }
+
   /// Stream of face frame maps emitted by the native pipeline.
   ///
   /// Each map is deserialized into a [FaceFrame] on the Dart side.

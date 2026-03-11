@@ -25,6 +25,16 @@ class MethodChannelFaceGestureDetector extends FaceGestureDetectorPlatform {
   }
 
   @override
+  Future<void> processFrame(FrameData frameData) {
+    return _methodChannel.invokeMethod('processFrame', {
+      'bytes': frameData.bytes,
+      'width': frameData.width,
+      'height': frameData.height,
+      'rotation': frameData.rotation,
+    });
+  }
+
+  @override
   Stream<Map<String, dynamic>> get faceFrameStream {
     _frameStream ??= _eventChannel
         .receiveBroadcastStream()

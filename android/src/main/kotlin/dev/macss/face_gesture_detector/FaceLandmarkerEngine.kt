@@ -23,7 +23,7 @@ class FaceLandmarkerEngine(
 
     companion object {
         private const val TAG = "FaceLandmarkerEngine"
-        private const val MODEL_ASSET = "face_landmarker.task"
+        private const val MODEL_ASSET = "models/face_landmarker.task"
     }
 
     private var landmarker: FaceLandmarker? = null
