@@ -17,6 +17,10 @@ and the project adheres to [Semantic Versioning](https://semver.org/).
 - `camera: ^0.11.1` added as a dependency
 - Example app requires `android.permission.CAMERA`
 
+### Fixed
+- **Deep-cast nested platform channel maps**: `FaceFrame.fromMap` now uses `Map<String, dynamic>.from()` for nested maps (`faceBoundingBox`, `poseAngles`, `quality`, `blendshapes`, `landmarks`) instead of direct `as Map<String, dynamic>` casts that failed at runtime with `_Map<Object?, Object?>`
+- **Face confidence always 0.00**: The `_neutral` blendshape score was incorrectly used as face detection confidence; now reports `1.0` when a face is detected (MediaPipe already filters by `minFaceDetectionConfidence`)
+
 ---
 
 ## 0.1.0-dev

@@ -99,11 +99,10 @@ class _FaceDetectorDemoState extends State<FaceDetectorDemo>
   }
 
   void _addEvent(String event) {
+    final entry = '${DateTime.now().toIso8601String().substring(11, 19)} $event';
+    debugPrint('[FaceGesture] $entry');
     setState(() {
-      _events.insert(
-        0,
-        '${DateTime.now().toIso8601String().substring(11, 19)} $event',
-      );
+      _events.insert(0, entry);
       if (_events.length > 50) _events.removeLast();
     });
   }
