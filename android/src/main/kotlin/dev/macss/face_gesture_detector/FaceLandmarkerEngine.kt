@@ -169,11 +169,10 @@ class FaceLandmarkerEngine(
             null
         }
 
-        // Face confidence from the first blendshape entry or detection confidence
-        val faceConfidence = blendshapes
-            ?.firstOrNull { it.categoryName() == "_neutral" }
-            ?.score()?.toDouble()
-            ?: 1.0
+        // FaceLandmarkerResult does not expose the raw detection score.
+        // If landmarks are present the face already passed the configured
+        // minFaceDetectionConfidence threshold, so we report 1.0.
+        val faceConfidence = 1.0
 
         return mapOf(
             "timestamp" to result.timestampMs(),
