@@ -26,3 +26,6 @@ export 'src/model/details/mouth_details.dart';
 export 'src/model/details/pose_details.dart';
 export 'src/model/details/quality_details.dart';
 export 'src/model/details/smile_details.dart';
+
+// Platform DTOs
+export 'src/platform/face_detection_options.dart';
