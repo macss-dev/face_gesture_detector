@@ -8,5 +8,6 @@
 library face_gesture_detector;
 
 export 'src/model/face_blendshape.dart';
+export 'src/model/face_landmark.dart';
 export 'src/model/image_quality_metrics.dart';
 export 'src/model/pose_angles.dart';
