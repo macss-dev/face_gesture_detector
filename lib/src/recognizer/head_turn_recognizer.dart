@@ -14,8 +14,8 @@ class HeadTurnRecognizer extends FaceGestureRecognizer {
   HeadTurnRecognizer({
     required FaceGestureConfiguration configuration,
     required HeadTurnCallback onHeadTurnDetected,
-  })  : _onHeadTurnDetected = onHeadTurnDetected,
-        super(configuration);
+  }) : _onHeadTurnDetected = onHeadTurnDetected,
+       super(configuration);
 
   final HeadTurnCallback _onHeadTurnDetected;
   Duration? _turnStart;
@@ -30,12 +30,15 @@ class HeadTurnRecognizer extends FaceGestureRecognizer {
 
       final sustained = frame.timestamp - _turnStart!;
       if (sustained >= configuration.sustainedGestureDuration) {
-        _onHeadTurnDetected(HeadTurnDetails(
-          yawAngle: yaw,
-          direction:
-              yaw > 0 ? HeadTurnDirection.left : HeadTurnDirection.right,
-          sustainedFor: sustained,
-        ));
+        _onHeadTurnDetected(
+          HeadTurnDetails(
+            yawAngle: yaw,
+            direction: yaw > 0
+                ? HeadTurnDirection.left
+                : HeadTurnDirection.right,
+            sustainedFor: sustained,
+          ),
+        );
         _turnStart = null;
       }
     } else {

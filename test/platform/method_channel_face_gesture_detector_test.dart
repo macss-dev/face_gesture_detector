@@ -15,37 +15,38 @@ void main() {
       platform = MethodChannelFaceGestureDetector();
       capturedCalls = [];
 
-      TestDefaultBinaryMessengerBinding
-          .instance.defaultBinaryMessenger
+      TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
           .setMockMethodCallHandler(methodChannel, (call) async {
-        capturedCalls.add(call);
-        return null;
-      });
+            capturedCalls.add(call);
+            return null;
+          });
     });
 
     tearDown(() {
-      TestDefaultBinaryMessengerBinding
-          .instance.defaultBinaryMessenger
+      TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
           .setMockMethodCallHandler(methodChannel, null);
     });
 
-    test('startDetection invokes native method with serialized options', () async {
-      final options = FaceDetectionOptions.fromConfiguration(
-        FaceGestureConfiguration(
-          faceDetectionConfidence: 0.7,
-          frameSkipCount: 1,
-          includeLandmarks: true,
-        ),
-      );
+    test(
+      'startDetection invokes native method with serialized options',
+      () async {
+        final options = FaceDetectionOptions.fromConfiguration(
+          FaceGestureConfiguration(
+            faceDetectionConfidence: 0.7,
+            frameSkipCount: 1,
+            includeLandmarks: true,
+          ),
+        );
 
-      await platform.startDetection(options);
+        await platform.startDetection(options);
 
-      expect(capturedCalls, hasLength(1));
-      expect(capturedCalls.first.method, 'startDetection');
-      expect(capturedCalls.first.arguments['faceDetectionConfidence'], 0.7);
-      expect(capturedCalls.first.arguments['frameSkipCount'], 1);
-      expect(capturedCalls.first.arguments['includeLandmarks'], isTrue);
-    });
+        expect(capturedCalls, hasLength(1));
+        expect(capturedCalls.first.method, 'startDetection');
+        expect(capturedCalls.first.arguments['faceDetectionConfidence'], 0.7);
+        expect(capturedCalls.first.arguments['frameSkipCount'], 1);
+        expect(capturedCalls.first.arguments['includeLandmarks'], isTrue);
+      },
+    );
 
     test('stopDetection invokes native method', () async {
       await platform.stopDetection();

@@ -4,26 +4,29 @@ import 'package:face_gesture_detector/face_gesture_detector.dart';
 
 void main() {
   group('FaceGestureDetector', () {
-    testWidgets('creates only FacePresenceRecognizer when only presence callbacks given',
-        (tester) async {
-      await tester.pumpWidget(
-        FaceGestureDetector(
-          configuration: FaceGestureConfiguration(),
-          onFaceDetected: (_) {},
-          child: SizedBox.shrink(),
-        ),
-      );
+    testWidgets(
+      'creates only FacePresenceRecognizer when only presence callbacks given',
+      (tester) async {
+        await tester.pumpWidget(
+          FaceGestureDetector(
+            configuration: FaceGestureConfiguration(),
+            onFaceDetected: (_) {},
+            child: SizedBox.shrink(),
+          ),
+        );
 
-      final rawWidget = tester.widget<RawFaceGestureDetector>(
-        find.byType(RawFaceGestureDetector),
-      );
+        final rawWidget = tester.widget<RawFaceGestureDetector>(
+          find.byType(RawFaceGestureDetector),
+        );
 
-      expect(rawWidget.recognizers, hasLength(1));
-      expect(rawWidget.recognizers, contains(FacePresenceRecognizer));
-    });
+        expect(rawWidget.recognizers, hasLength(1));
+        expect(rawWidget.recognizers, contains(FacePresenceRecognizer));
+      },
+    );
 
-    testWidgets('creates no recognizers when no callbacks given',
-        (tester) async {
+    testWidgets('creates no recognizers when no callbacks given', (
+      tester,
+    ) async {
       await tester.pumpWidget(
         FaceGestureDetector(
           configuration: FaceGestureConfiguration(),
@@ -38,8 +41,9 @@ void main() {
       expect(rawWidget.recognizers, isEmpty);
     });
 
-    testWidgets('creates all recognizers when all callbacks given',
-        (tester) async {
+    testWidgets('creates all recognizers when all callbacks given', (
+      tester,
+    ) async {
       await tester.pumpWidget(
         FaceGestureDetector(
           configuration: FaceGestureConfiguration(),
@@ -67,8 +71,9 @@ void main() {
       expect(rawWidget.recognizers, hasLength(10));
     });
 
-    testWidgets('forwards controller to RawFaceGestureDetector',
-        (tester) async {
+    testWidgets('forwards controller to RawFaceGestureDetector', (
+      tester,
+    ) async {
       final controller = FaceGestureDetectorController();
 
       await tester.pumpWidget(
@@ -87,8 +92,9 @@ void main() {
       expect(rawWidget.controller, same(controller));
     });
 
-    testWidgets('forwards configuration to RawFaceGestureDetector',
-        (tester) async {
+    testWidgets('forwards configuration to RawFaceGestureDetector', (
+      tester,
+    ) async {
       final config = FaceGestureConfiguration(blinkThreshold: 0.99);
 
       await tester.pumpWidget(

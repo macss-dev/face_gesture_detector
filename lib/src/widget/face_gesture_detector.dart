@@ -201,10 +201,10 @@ class _FacePresenceFactory
 
   @override
   FacePresenceRecognizer create() => FacePresenceRecognizer(
-        configuration: configuration,
-        onFaceDetected: onFaceDetected ?? (_) {},
-        onFaceLost: onFaceLost ?? () {},
-      );
+    configuration: configuration,
+    onFaceDetected: onFaceDetected ?? (_) {},
+    onFaceLost: onFaceLost ?? () {},
+  );
 }
 
 class _QualityGateFactory
@@ -221,14 +221,14 @@ class _QualityGateFactory
 
   @override
   QualityGateRecognizer create() => QualityGateRecognizer(
-        configuration: configuration,
-        // Frame dimensions default to HD — will be updated with real
-        // values once native integration is wired in M3.
-        frameWidth: 1280,
-        frameHeight: 720,
-        onQualityChanged: onQualityChanged ?? (_) {},
-        onDistanceChanged: onDistanceChanged ?? (_) {},
-      );
+    configuration: configuration,
+    // Frame dimensions default to HD — will be updated with real
+    // values once native integration is wired in M3.
+    frameWidth: 1280,
+    frameHeight: 720,
+    onQualityChanged: onQualityChanged ?? (_) {},
+    onDistanceChanged: onDistanceChanged ?? (_) {},
+  );
 }
 
 class _PoseFactory extends FaceGestureRecognizerFactory<PoseRecognizer> {
@@ -239,9 +239,9 @@ class _PoseFactory extends FaceGestureRecognizerFactory<PoseRecognizer> {
 
   @override
   PoseRecognizer create() => PoseRecognizer(
-        configuration: configuration,
-        onPoseChanged: onPoseChanged,
-      );
+    configuration: configuration,
+    onPoseChanged: onPoseChanged,
+  );
 }
 
 class _BlinkFactory extends FaceGestureRecognizerFactory<BlinkRecognizer> {
@@ -252,9 +252,9 @@ class _BlinkFactory extends FaceGestureRecognizerFactory<BlinkRecognizer> {
 
   @override
   BlinkRecognizer create() => BlinkRecognizer(
-        configuration: configuration,
-        onBlinkDetected: onBlinkDetected,
-      );
+    configuration: configuration,
+    onBlinkDetected: onBlinkDetected,
+  );
 }
 
 class _SmileFactory extends FaceGestureRecognizerFactory<SmileRecognizer> {
@@ -265,9 +265,9 @@ class _SmileFactory extends FaceGestureRecognizerFactory<SmileRecognizer> {
 
   @override
   SmileRecognizer create() => SmileRecognizer(
-        configuration: configuration,
-        onSmileDetected: onSmileDetected,
-      );
+    configuration: configuration,
+    onSmileDetected: onSmileDetected,
+  );
 }
 
 class _MouthFactory extends FaceGestureRecognizerFactory<MouthRecognizer> {
@@ -278,9 +278,9 @@ class _MouthFactory extends FaceGestureRecognizerFactory<MouthRecognizer> {
 
   @override
   MouthRecognizer create() => MouthRecognizer(
-        configuration: configuration,
-        onMouthOpened: onMouthOpened,
-      );
+    configuration: configuration,
+    onMouthOpened: onMouthOpened,
+  );
 }
 
 class _BrowFactory extends FaceGestureRecognizerFactory<BrowRecognizer> {
@@ -290,10 +290,8 @@ class _BrowFactory extends FaceGestureRecognizerFactory<BrowRecognizer> {
   _BrowFactory({required this.configuration, required this.onBrowRaised});
 
   @override
-  BrowRecognizer create() => BrowRecognizer(
-        configuration: configuration,
-        onBrowRaised: onBrowRaised,
-      );
+  BrowRecognizer create() =>
+      BrowRecognizer(configuration: configuration, onBrowRaised: onBrowRaised);
 }
 
 class _HeadTurnFactory
@@ -308,13 +306,12 @@ class _HeadTurnFactory
 
   @override
   HeadTurnRecognizer create() => HeadTurnRecognizer(
-        configuration: configuration,
-        onHeadTurnDetected: onHeadTurnDetected,
-      );
+    configuration: configuration,
+    onHeadTurnDetected: onHeadTurnDetected,
+  );
 }
 
-class _HeadNodFactory
-    extends FaceGestureRecognizerFactory<HeadNodRecognizer> {
+class _HeadNodFactory extends FaceGestureRecognizerFactory<HeadNodRecognizer> {
   final FaceGestureConfiguration configuration;
   final ValueChanged<HeadNodDetails> onHeadNodDetected;
 
@@ -325,9 +322,9 @@ class _HeadNodFactory
 
   @override
   HeadNodRecognizer create() => HeadNodRecognizer(
-        configuration: configuration,
-        onHeadNodDetected: onHeadNodDetected,
-      );
+    configuration: configuration,
+    onHeadNodDetected: onHeadNodDetected,
+  );
 }
 
 class _RawFrameFactory
@@ -339,7 +336,7 @@ class _RawFrameFactory
 
   @override
   RawFrameRecognizer create() => RawFrameRecognizer(
-        configuration: configuration,
-        onFaceFrame: onFaceFrame,
-      );
+    configuration: configuration,
+    onFaceFrame: onFaceFrame,
+  );
 }

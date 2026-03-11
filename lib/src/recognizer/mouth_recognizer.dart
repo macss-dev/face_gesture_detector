@@ -13,16 +13,15 @@ class MouthRecognizer extends FaceGestureRecognizer {
   MouthRecognizer({
     required FaceGestureConfiguration configuration,
     required MouthOpenedCallback onMouthOpened,
-  })  : _onMouthOpened = onMouthOpened,
-        super(configuration);
+  }) : _onMouthOpened = onMouthOpened,
+       super(configuration);
 
   final MouthOpenedCallback _onMouthOpened;
   Duration? _mouthStart;
 
   @override
   void addFaceFrame(FaceFrame frame) {
-    final openness =
-        frame.blendshapes[FaceBlendshape.jawOpen] ?? 0.0;
+    final openness = frame.blendshapes[FaceBlendshape.jawOpen] ?? 0.0;
 
     if (openness >= configuration.mouthOpenThreshold) {
       _mouthStart ??= frame.timestamp;

@@ -13,16 +13,15 @@ class BrowRecognizer extends FaceGestureRecognizer {
   BrowRecognizer({
     required FaceGestureConfiguration configuration,
     required BrowRaisedCallback onBrowRaised,
-  })  : _onBrowRaised = onBrowRaised,
-        super(configuration);
+  }) : _onBrowRaised = onBrowRaised,
+       super(configuration);
 
   final BrowRaisedCallback _onBrowRaised;
   Duration? _browStart;
 
   @override
   void addFaceFrame(FaceFrame frame) {
-    final intensity =
-        frame.blendshapes[FaceBlendshape.browInnerUp] ?? 0.0;
+    final intensity = frame.blendshapes[FaceBlendshape.browInnerUp] ?? 0.0;
 
     if (intensity >= configuration.browRaisedThreshold) {
       _browStart ??= frame.timestamp;

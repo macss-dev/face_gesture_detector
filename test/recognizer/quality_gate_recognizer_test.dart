@@ -55,13 +55,16 @@ void main() {
       expect(qualityEvents.first.metrics.brightness, 0.5);
     });
 
-    test('fires onDistanceChanged when bounding box ratio is below minimum', () {
-      // Very small face → too far. Ratio = (50*60) / (1080*1920) ≈ 0.0014
-      recognizer.addFaceFrame(_frame(bboxWidth: 50, bboxHeight: 60));
+    test(
+      'fires onDistanceChanged when bounding box ratio is below minimum',
+      () {
+        // Very small face → too far. Ratio = (50*60) / (1080*1920) ≈ 0.0014
+        recognizer.addFaceFrame(_frame(bboxWidth: 50, bboxHeight: 60));
 
-      expect(distanceEvents, hasLength(1));
-      expect(distanceEvents.first.category, DistanceCategory.tooFar);
-    });
+        expect(distanceEvents, hasLength(1));
+        expect(distanceEvents.first.category, DistanceCategory.tooFar);
+      },
+    );
 
     test('fires onDistanceChanged with tooClose for large bounding box', () {
       // Very large face → too close. Ratio = (800*1200) / (1080*1920) ≈ 0.46
@@ -84,13 +87,16 @@ void main() {
       expect(distanceEvents.first.category, DistanceCategory.optimal);
     });
 
-    test('only fires onDistanceChanged on category change, not every frame', () {
-      // Two frames with same distance category → only fires once
-      recognizer.addFaceFrame(_frame(bboxWidth: 650, bboxHeight: 650));
-      recognizer.addFaceFrame(_frame(bboxWidth: 660, bboxHeight: 660));
+    test(
+      'only fires onDistanceChanged on category change, not every frame',
+      () {
+        // Two frames with same distance category → only fires once
+        recognizer.addFaceFrame(_frame(bboxWidth: 650, bboxHeight: 650));
+        recognizer.addFaceFrame(_frame(bboxWidth: 660, bboxHeight: 660));
 
-      expect(distanceEvents, hasLength(1));
-    });
+        expect(distanceEvents, hasLength(1));
+      },
+    );
 
     test('fires again when distance category changes', () {
       // Optimal

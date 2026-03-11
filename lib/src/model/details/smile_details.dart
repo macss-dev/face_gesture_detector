@@ -7,8 +7,5 @@ class SmileDetails {
   final double intensity;
   final Duration sustainedFor;
 
-  const SmileDetails({
-    required this.intensity,
-    required this.sustainedFor,
-  });
+  const SmileDetails({required this.intensity, required this.sustainedFor});
 }

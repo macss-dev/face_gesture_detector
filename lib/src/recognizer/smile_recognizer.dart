@@ -13,18 +13,16 @@ class SmileRecognizer extends FaceGestureRecognizer {
   SmileRecognizer({
     required FaceGestureConfiguration configuration,
     required SmileCallback onSmileDetected,
-  })  : _onSmileDetected = onSmileDetected,
-        super(configuration);
+  }) : _onSmileDetected = onSmileDetected,
+       super(configuration);
 
   final SmileCallback _onSmileDetected;
   Duration? _smileStart;
 
   @override
   void addFaceFrame(FaceFrame frame) {
-    final left =
-        frame.blendshapes[FaceBlendshape.mouthSmileLeft] ?? 0.0;
-    final right =
-        frame.blendshapes[FaceBlendshape.mouthSmileRight] ?? 0.0;
+    final left = frame.blendshapes[FaceBlendshape.mouthSmileLeft] ?? 0.0;
+    final right = frame.blendshapes[FaceBlendshape.mouthSmileRight] ?? 0.0;
     final intensity = (left + right) / 2.0;
 
     if (intensity >= configuration.smileThreshold) {
@@ -32,10 +30,9 @@ class SmileRecognizer extends FaceGestureRecognizer {
 
       final sustained = frame.timestamp - _smileStart!;
       if (sustained >= configuration.sustainedGestureDuration) {
-        _onSmileDetected(SmileDetails(
-          intensity: intensity,
-          sustainedFor: sustained,
-        ));
+        _onSmileDetected(
+          SmileDetails(intensity: intensity, sustainedFor: sustained),
+        );
         // Reset so it can fire again on the next sustained window.
         _smileStart = null;
       }

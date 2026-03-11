@@ -126,8 +126,9 @@ void main() {
       expect(factorySkip.lastCreated!.receivedFrames, hasLength(2));
     });
 
-    testWidgets('does not dispatch frames when paused via controller',
-        (tester) async {
+    testWidgets('does not dispatch frames when paused via controller', (
+      tester,
+    ) async {
       final controller = FaceGestureDetectorController();
       final factory = _TestRecognizerFactory(config);
 

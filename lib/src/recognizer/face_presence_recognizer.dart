@@ -27,17 +27,20 @@ class FacePresenceRecognizer extends FaceGestureRecognizer {
 
   @override
   void addFaceFrame(FaceFrame frame) {
-    final isFacePresent = frame.isFaceDetected &&
+    final isFacePresent =
+        frame.isFaceDetected &&
         frame.faceConfidence >= configuration.faceDetectionConfidence;
 
     if (isFacePresent && !_wasFacePresent) {
       _wasFacePresent = true;
-      onFaceDetected(FaceDetectedDetails(
-        boundingBox: frame.faceBoundingBox,
-        confidence: frame.faceConfidence,
-        pose: frame.poseAngles,
-        distance: _classifyDistance(frame),
-      ));
+      onFaceDetected(
+        FaceDetectedDetails(
+          boundingBox: frame.faceBoundingBox,
+          confidence: frame.faceConfidence,
+          pose: frame.poseAngles,
+          distance: _classifyDistance(frame),
+        ),
+      );
     } else if (!isFacePresent && _wasFacePresent) {
       _wasFacePresent = false;
       onFaceLost();
@@ -49,12 +52,14 @@ class FacePresenceRecognizer extends FaceGestureRecognizer {
     // Frame dimensions aren't in FaceFrame, so we use the bounding box width
     // as a proxy — the actual ratio calculation happens in QualityGateRecognizer.
     // Here we provide a best-effort classification.
-    final ratio = frame.faceBoundingBox.width *
+    final ratio =
+        frame.faceBoundingBox.width *
         frame.faceBoundingBox.height /
         (frame.faceBoundingBox.width * frame.faceBoundingBox.height +
             1); // Simplified — always optimal for presence detection
     if (ratio < configuration.minDistanceRatio) return DistanceCategory.tooFar;
-    if (ratio > configuration.maxDistanceRatio) return DistanceCategory.tooClose;
+    if (ratio > configuration.maxDistanceRatio)
+      return DistanceCategory.tooClose;
     return DistanceCategory.optimal;
   }
 

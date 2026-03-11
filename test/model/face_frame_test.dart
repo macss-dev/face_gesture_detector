@@ -74,10 +74,7 @@ void main() {
             'eyeBlinkLeft': 0.8,
             'mouthSmileRight': 0.3,
           },
-          'quality': <String, dynamic>{
-            'brightness': 0.5,
-            'sharpness': 120.0,
-          },
+          'quality': <String, dynamic>{'brightness': 0.5, 'sharpness': 120.0},
         };
 
         final frame = FaceFrame.fromMap(map);
@@ -85,7 +82,10 @@ void main() {
         expect(frame.timestamp, Duration(milliseconds: 1234));
         expect(frame.isFaceDetected, isTrue);
         expect(frame.faceConfidence, 0.95);
-        expect(frame.faceBoundingBox, Rect.fromLTWH(100.0, 120.0, 200.0, 250.0));
+        expect(
+          frame.faceBoundingBox,
+          Rect.fromLTWH(100.0, 120.0, 200.0, 250.0),
+        );
         expect(frame.poseAngles.pitch, 5.0);
         expect(frame.poseAngles.yaw, -3.0);
         expect(frame.blendshapes[FaceBlendshape.eyeBlinkLeft], 0.8);
@@ -116,10 +116,7 @@ void main() {
             {'x': 0.1, 'y': 0.2, 'z': 0.0},
             {'x': 0.5, 'y': 0.5, 'z': -0.1},
           ],
-          'quality': <String, dynamic>{
-            'brightness': 0.4,
-            'sharpness': 80.0,
-          },
+          'quality': <String, dynamic>{'brightness': 0.4, 'sharpness': 80.0},
         };
 
         final frame = FaceFrame.fromMap(map);
@@ -147,10 +144,7 @@ void main() {
             'roll': 0.0,
           },
           'blendshapes': <String, dynamic>{},
-          'quality': <String, dynamic>{
-            'brightness': 0.3,
-            'sharpness': 50.0,
-          },
+          'quality': <String, dynamic>{'brightness': 0.3, 'sharpness': 50.0},
         };
 
         final frame = FaceFrame.fromMap(map);

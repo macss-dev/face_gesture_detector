@@ -12,10 +12,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Face Gesture Detector Demo',
-      theme: ThemeData(
-        colorSchemeSeed: Colors.blue,
-        useMaterial3: true,
-      ),
+      theme: ThemeData(colorSchemeSeed: Colors.blue, useMaterial3: true),
       home: const FaceDetectorDemo(),
     );
   }
@@ -37,7 +34,10 @@ class _FaceDetectorDemoState extends State<FaceDetectorDemo> {
 
   void _addEvent(String event) {
     setState(() {
-      _events.insert(0, '${DateTime.now().toIso8601String().substring(11, 19)} $event');
+      _events.insert(
+        0,
+        '${DateTime.now().toIso8601String().substring(11, 19)} $event',
+      );
       if (_events.length > 50) _events.removeLast();
     });
   }
@@ -83,24 +83,30 @@ class _FaceDetectorDemoState extends State<FaceDetectorDemo> {
               controller: _controller,
               onFaceDetected: (details) {
                 _hasFace = true;
-                _addEvent('Face detected (${(details.confidence * 100).toInt()}%)');
+                _addEvent(
+                  'Face detected (${(details.confidence * 100).toInt()}%)',
+                );
               },
               onFaceLost: () {
                 _hasFace = false;
                 _addEvent('Face lost');
               },
-              onBlinkDetected: (details) =>
-                  _addEvent('Blink (${details.blinkDuration.inMilliseconds}ms)'),
-              onSmileDetected: (details) =>
-                  _addEvent('Smile (intensity: ${details.intensity.toStringAsFixed(2)})'),
+              onBlinkDetected: (details) => _addEvent(
+                'Blink (${details.blinkDuration.inMilliseconds}ms)',
+              ),
+              onSmileDetected: (details) => _addEvent(
+                'Smile (intensity: ${details.intensity.toStringAsFixed(2)})',
+              ),
               onHeadTurnDetected: (details) =>
                   _addEvent('Head turn ${details.direction.name}'),
               onHeadNodDetected: (details) =>
                   _addEvent('Head nod ${details.direction.name}'),
-              onBrowRaised: (details) =>
-                  _addEvent('Brow raised (${details.intensity.toStringAsFixed(2)})'),
-              onMouthOpened: (details) =>
-                  _addEvent('Mouth open (${details.openness.toStringAsFixed(2)})'),
+              onBrowRaised: (details) => _addEvent(
+                'Brow raised (${details.intensity.toStringAsFixed(2)})',
+              ),
+              onMouthOpened: (details) => _addEvent(
+                'Mouth open (${details.openness.toStringAsFixed(2)})',
+              ),
               onPoseChanged: (details) =>
                   _addEvent('Pose: frontal=${details.isFrontal}'),
               onDistanceChanged: (details) =>

@@ -7,11 +7,7 @@ class FaceLandmark {
   final double y;
   final double z;
 
-  const FaceLandmark({
-    required this.x,
-    required this.y,
-    required this.z,
-  });
+  const FaceLandmark({required this.x, required this.y, required this.z});
 }
 
 /// Classification of the user's distance from the camera,

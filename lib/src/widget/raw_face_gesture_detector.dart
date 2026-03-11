@@ -33,8 +33,7 @@ class RawFaceGestureDetector extends StatefulWidget {
   });
 
   @override
-  State<RawFaceGestureDetector> createState() =>
-      RawFaceGestureDetectorState();
+  State<RawFaceGestureDetector> createState() => RawFaceGestureDetectorState();
 }
 
 /// Public state so tests and advanced users can call [dispatchFrame].
@@ -108,8 +107,9 @@ class RawFaceGestureDetectorState extends State<RawFaceGestureDetector> {
   /// Disposes removed recognizers, creates new ones, reuses persisting.
   void _syncRecognizers(Map<Type, FaceGestureRecognizerFactory> requested) {
     // Dispose recognizers no longer in the map.
-    final removedKeys =
-        _activeRecognizers.keys.where((k) => !requested.containsKey(k)).toList();
+    final removedKeys = _activeRecognizers.keys
+        .where((k) => !requested.containsKey(k))
+        .toList();
     for (final key in removedKeys) {
       _activeRecognizers.remove(key)?.dispose();
     }

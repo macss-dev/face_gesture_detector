@@ -36,9 +36,9 @@ class MethodChannelFaceGestureDetector extends FaceGestureDetectorPlatform {
 
   @override
   Stream<Map<String, dynamic>> get faceFrameStream {
-    _frameStream ??= _eventChannel
-        .receiveBroadcastStream()
-        .map((event) => Map<String, dynamic>.from(event as Map));
+    _frameStream ??= _eventChannel.receiveBroadcastStream().map(
+      (event) => Map<String, dynamic>.from(event as Map),
+    );
     return _frameStream!;
   }
 }

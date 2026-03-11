@@ -29,10 +29,8 @@ class BlinkRecognizer extends FaceGestureRecognizer {
 
   @override
   void addFaceFrame(FaceFrame frame) {
-    final leftBlink =
-        frame.blendshapes[FaceBlendshape.eyeBlinkLeft] ?? 0.0;
-    final rightBlink =
-        frame.blendshapes[FaceBlendshape.eyeBlinkRight] ?? 0.0;
+    final leftBlink = frame.blendshapes[FaceBlendshape.eyeBlinkLeft] ?? 0.0;
+    final rightBlink = frame.blendshapes[FaceBlendshape.eyeBlinkRight] ?? 0.0;
     final averageBlink = (leftBlink + rightBlink) / 2;
     final isClosed = averageBlink >= configuration.blinkThreshold;
 
@@ -49,11 +47,13 @@ class BlinkRecognizer extends FaceGestureRecognizer {
           final blinkDuration = frame.timestamp - closedAt;
 
           if (blinkDuration <= _maxBlinkDuration) {
-            onBlinkDetected(BlinkDetails(
-              leftEyeOpenness: leftBlink,
-              rightEyeOpenness: rightBlink,
-              blinkDuration: blinkDuration,
-            ));
+            onBlinkDetected(
+              BlinkDetails(
+                leftEyeOpenness: leftBlink,
+                rightEyeOpenness: rightBlink,
+                blinkDuration: blinkDuration,
+              ),
+            );
           }
           _phase = _BlinkPhase.open;
           _closedAtTimestamp = null;

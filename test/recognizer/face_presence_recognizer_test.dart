@@ -57,10 +57,7 @@ void main() {
         onFaceLost: () => lostEvents.add(null),
       );
 
-      recognizer.addFaceFrame(_frame(
-        isFaceDetected: true,
-        confidence: 0.5,
-      ));
+      recognizer.addFaceFrame(_frame(isFaceDetected: true, confidence: 0.5));
 
       expect(detectedEvents, isEmpty);
     });

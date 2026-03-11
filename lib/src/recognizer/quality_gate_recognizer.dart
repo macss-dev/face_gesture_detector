@@ -40,18 +40,19 @@ class QualityGateRecognizer extends FaceGestureRecognizer {
   void _emitQualityIfNeeded(FaceFrame frame) {
     // Emit quality on every frame that passes — the consumer decides
     // when metrics are sufficient. First-frame emission establishes baseline.
-    if (!_hasEmittedQuality ||
-        true) {
+    if (!_hasEmittedQuality || true) {
       // Quality is always reported so the app can track real-time metrics.
       _hasEmittedQuality = true;
       final isSufficient =
           frame.quality.brightness >= 0.3 &&
           frame.quality.brightness <= 0.7 &&
           frame.quality.sharpness >= 100.0;
-      onQualityChanged(QualityDetails(
-        metrics: frame.quality,
-        isSufficientForCapture: isSufficient,
-      ));
+      onQualityChanged(
+        QualityDetails(
+          metrics: frame.quality,
+          isSufficientForCapture: isSufficient,
+        ),
+      );
     }
   }
 
@@ -61,16 +62,14 @@ class QualityGateRecognizer extends FaceGestureRecognizer {
 
     if (category != _previousDistanceCategory) {
       _previousDistanceCategory = category;
-      onDistanceChanged(DistanceDetails(
-        category: category,
-        boundingBoxRatio: ratio,
-      ));
+      onDistanceChanged(
+        DistanceDetails(category: category, boundingBoxRatio: ratio),
+      );
     }
   }
 
   double _boundingBoxRatio(FaceFrame frame) {
-    final bboxArea =
-        frame.faceBoundingBox.width * frame.faceBoundingBox.height;
+    final bboxArea = frame.faceBoundingBox.width * frame.faceBoundingBox.height;
     final frameArea = frameWidth * frameHeight;
     if (frameArea == 0) return 0;
     return bboxArea / frameArea;
@@ -78,7 +77,8 @@ class QualityGateRecognizer extends FaceGestureRecognizer {
 
   DistanceCategory _classifyDistance(double ratio) {
     if (ratio < configuration.minDistanceRatio) return DistanceCategory.tooFar;
-    if (ratio > configuration.maxDistanceRatio) return DistanceCategory.tooClose;
+    if (ratio > configuration.maxDistanceRatio)
+      return DistanceCategory.tooClose;
     return DistanceCategory.optimal;
   }
 

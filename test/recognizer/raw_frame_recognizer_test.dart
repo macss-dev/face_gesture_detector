@@ -25,9 +25,7 @@ void main() {
         onFaceFrame: (frame) => receivedFrame = frame,
       );
 
-      final frame = _syntheticFrame(
-        timestamp: Duration(milliseconds: 42),
-      );
+      final frame = _syntheticFrame(timestamp: Duration(milliseconds: 42));
       recognizer.addFaceFrame(frame);
 
       expect(receivedFrame, isNotNull);
@@ -41,15 +39,15 @@ void main() {
         onFaceFrame: receivedFrames.add,
       );
 
-      recognizer.addFaceFrame(_syntheticFrame(
-        timestamp: Duration(milliseconds: 1),
-      ));
-      recognizer.addFaceFrame(_syntheticFrame(
-        timestamp: Duration(milliseconds: 2),
-      ));
-      recognizer.addFaceFrame(_syntheticFrame(
-        timestamp: Duration(milliseconds: 3),
-      ));
+      recognizer.addFaceFrame(
+        _syntheticFrame(timestamp: Duration(milliseconds: 1)),
+      );
+      recognizer.addFaceFrame(
+        _syntheticFrame(timestamp: Duration(milliseconds: 2)),
+      );
+      recognizer.addFaceFrame(
+        _syntheticFrame(timestamp: Duration(milliseconds: 3)),
+      );
 
       expect(receivedFrames, hasLength(3));
     });

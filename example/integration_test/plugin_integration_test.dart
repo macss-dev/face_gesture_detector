@@ -6,7 +6,6 @@
 // For more information about Flutter integration tests, please see
 // https://flutter.dev/to/integration-testing
 
-
 import 'dart:typed_data';
 
 import 'package:flutter_test/flutter_test.dart';
@@ -17,7 +16,9 @@ import 'package:face_gesture_detector/face_gesture_detector.dart';
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  testWidgets('startDetection and stopDetection complete', (WidgetTester tester) async {
+  testWidgets('startDetection and stopDetection complete', (
+    WidgetTester tester,
+  ) async {
     final platform = FaceGestureDetectorPlatform.instance;
     final options = FaceDetectionOptions.fromConfiguration(
       FaceGestureConfiguration(),

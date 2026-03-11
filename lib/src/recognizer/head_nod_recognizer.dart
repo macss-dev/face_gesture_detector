@@ -14,8 +14,8 @@ class HeadNodRecognizer extends FaceGestureRecognizer {
   HeadNodRecognizer({
     required FaceGestureConfiguration configuration,
     required HeadNodCallback onHeadNodDetected,
-  })  : _onHeadNodDetected = onHeadNodDetected,
-        super(configuration);
+  }) : _onHeadNodDetected = onHeadNodDetected,
+       super(configuration);
 
   final HeadNodCallback _onHeadNodDetected;
   Duration? _nodStart;
@@ -30,12 +30,13 @@ class HeadNodRecognizer extends FaceGestureRecognizer {
 
       final sustained = frame.timestamp - _nodStart!;
       if (sustained >= configuration.sustainedGestureDuration) {
-        _onHeadNodDetected(HeadNodDetails(
-          pitchAngle: pitch,
-          direction:
-              pitch > 0 ? HeadNodDirection.up : HeadNodDirection.down,
-          sustainedFor: sustained,
-        ));
+        _onHeadNodDetected(
+          HeadNodDetails(
+            pitchAngle: pitch,
+            direction: pitch > 0 ? HeadNodDirection.up : HeadNodDirection.down,
+            sustainedFor: sustained,
+          ),
+        );
         _nodStart = null;
       }
     } else {

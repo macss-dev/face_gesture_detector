@@ -38,86 +38,108 @@ void main() {
 
     test('detects complete open→closed→open blink cycle', () {
       // Eyes open (blendshape < threshold means open; > threshold means closed)
-      recognizer.addFaceFrame(_frame(
-        timestamp: Duration(milliseconds: 0),
-        eyeBlinkLeft: 0.1,
-        eyeBlinkRight: 0.1,
-      ));
+      recognizer.addFaceFrame(
+        _frame(
+          timestamp: Duration(milliseconds: 0),
+          eyeBlinkLeft: 0.1,
+          eyeBlinkRight: 0.1,
+        ),
+      );
 
       // Eyes closed
-      recognizer.addFaceFrame(_frame(
-        timestamp: Duration(milliseconds: 100),
-        eyeBlinkLeft: 0.8,
-        eyeBlinkRight: 0.8,
-      ));
+      recognizer.addFaceFrame(
+        _frame(
+          timestamp: Duration(milliseconds: 100),
+          eyeBlinkLeft: 0.8,
+          eyeBlinkRight: 0.8,
+        ),
+      );
 
       // Eyes open again → blink complete
-      recognizer.addFaceFrame(_frame(
-        timestamp: Duration(milliseconds: 250),
-        eyeBlinkLeft: 0.1,
-        eyeBlinkRight: 0.1,
-      ));
+      recognizer.addFaceFrame(
+        _frame(
+          timestamp: Duration(milliseconds: 250),
+          eyeBlinkLeft: 0.1,
+          eyeBlinkRight: 0.1,
+        ),
+      );
 
       expect(blinkEvents, hasLength(1));
       expect(blinkEvents.first.blinkDuration, Duration(milliseconds: 150));
     });
 
     test('does not fire on incomplete cycle (open→closed only)', () {
-      recognizer.addFaceFrame(_frame(
-        timestamp: Duration(milliseconds: 0),
-        eyeBlinkLeft: 0.1,
-        eyeBlinkRight: 0.1,
-      ));
+      recognizer.addFaceFrame(
+        _frame(
+          timestamp: Duration(milliseconds: 0),
+          eyeBlinkLeft: 0.1,
+          eyeBlinkRight: 0.1,
+        ),
+      );
 
-      recognizer.addFaceFrame(_frame(
-        timestamp: Duration(milliseconds: 100),
-        eyeBlinkLeft: 0.8,
-        eyeBlinkRight: 0.8,
-      ));
+      recognizer.addFaceFrame(
+        _frame(
+          timestamp: Duration(milliseconds: 100),
+          eyeBlinkLeft: 0.8,
+          eyeBlinkRight: 0.8,
+        ),
+      );
 
       // Eyes stay closed — no blink event
       expect(blinkEvents, isEmpty);
     });
 
     test('does not fire when cycle is too slow (>500ms)', () {
-      recognizer.addFaceFrame(_frame(
-        timestamp: Duration(milliseconds: 0),
-        eyeBlinkLeft: 0.1,
-        eyeBlinkRight: 0.1,
-      ));
+      recognizer.addFaceFrame(
+        _frame(
+          timestamp: Duration(milliseconds: 0),
+          eyeBlinkLeft: 0.1,
+          eyeBlinkRight: 0.1,
+        ),
+      );
 
-      recognizer.addFaceFrame(_frame(
-        timestamp: Duration(milliseconds: 100),
-        eyeBlinkLeft: 0.8,
-        eyeBlinkRight: 0.8,
-      ));
+      recognizer.addFaceFrame(
+        _frame(
+          timestamp: Duration(milliseconds: 100),
+          eyeBlinkLeft: 0.8,
+          eyeBlinkRight: 0.8,
+        ),
+      );
 
       // Eyes reopen but too late
-      recognizer.addFaceFrame(_frame(
-        timestamp: Duration(milliseconds: 700),
-        eyeBlinkLeft: 0.1,
-        eyeBlinkRight: 0.1,
-      ));
+      recognizer.addFaceFrame(
+        _frame(
+          timestamp: Duration(milliseconds: 700),
+          eyeBlinkLeft: 0.1,
+          eyeBlinkRight: 0.1,
+        ),
+      );
 
       expect(blinkEvents, isEmpty);
     });
 
     test('reports eye openness values in details', () {
-      recognizer.addFaceFrame(_frame(
-        timestamp: Duration(milliseconds: 0),
-        eyeBlinkLeft: 0.1,
-        eyeBlinkRight: 0.15,
-      ));
-      recognizer.addFaceFrame(_frame(
-        timestamp: Duration(milliseconds: 100),
-        eyeBlinkLeft: 0.8,
-        eyeBlinkRight: 0.9,
-      ));
-      recognizer.addFaceFrame(_frame(
-        timestamp: Duration(milliseconds: 200),
-        eyeBlinkLeft: 0.05,
-        eyeBlinkRight: 0.1,
-      ));
+      recognizer.addFaceFrame(
+        _frame(
+          timestamp: Duration(milliseconds: 0),
+          eyeBlinkLeft: 0.1,
+          eyeBlinkRight: 0.15,
+        ),
+      );
+      recognizer.addFaceFrame(
+        _frame(
+          timestamp: Duration(milliseconds: 100),
+          eyeBlinkLeft: 0.8,
+          eyeBlinkRight: 0.9,
+        ),
+      );
+      recognizer.addFaceFrame(
+        _frame(
+          timestamp: Duration(milliseconds: 200),
+          eyeBlinkLeft: 0.05,
+          eyeBlinkRight: 0.1,
+        ),
+      );
 
       expect(blinkEvents, hasLength(1));
       expect(blinkEvents.first.leftEyeOpenness, 0.05);
@@ -126,49 +148,73 @@ void main() {
 
     test('detects consecutive blinks', () {
       // First blink
-      recognizer.addFaceFrame(_frame(
-        timestamp: Duration(milliseconds: 0),
-        eyeBlinkLeft: 0.1, eyeBlinkRight: 0.1,
-      ));
-      recognizer.addFaceFrame(_frame(
-        timestamp: Duration(milliseconds: 100),
-        eyeBlinkLeft: 0.8, eyeBlinkRight: 0.8,
-      ));
-      recognizer.addFaceFrame(_frame(
-        timestamp: Duration(milliseconds: 200),
-        eyeBlinkLeft: 0.1, eyeBlinkRight: 0.1,
-      ));
+      recognizer.addFaceFrame(
+        _frame(
+          timestamp: Duration(milliseconds: 0),
+          eyeBlinkLeft: 0.1,
+          eyeBlinkRight: 0.1,
+        ),
+      );
+      recognizer.addFaceFrame(
+        _frame(
+          timestamp: Duration(milliseconds: 100),
+          eyeBlinkLeft: 0.8,
+          eyeBlinkRight: 0.8,
+        ),
+      );
+      recognizer.addFaceFrame(
+        _frame(
+          timestamp: Duration(milliseconds: 200),
+          eyeBlinkLeft: 0.1,
+          eyeBlinkRight: 0.1,
+        ),
+      );
 
       // Second blink
-      recognizer.addFaceFrame(_frame(
-        timestamp: Duration(milliseconds: 500),
-        eyeBlinkLeft: 0.8, eyeBlinkRight: 0.8,
-      ));
-      recognizer.addFaceFrame(_frame(
-        timestamp: Duration(milliseconds: 600),
-        eyeBlinkLeft: 0.1, eyeBlinkRight: 0.1,
-      ));
+      recognizer.addFaceFrame(
+        _frame(
+          timestamp: Duration(milliseconds: 500),
+          eyeBlinkLeft: 0.8,
+          eyeBlinkRight: 0.8,
+        ),
+      );
+      recognizer.addFaceFrame(
+        _frame(
+          timestamp: Duration(milliseconds: 600),
+          eyeBlinkLeft: 0.1,
+          eyeBlinkRight: 0.1,
+        ),
+      );
 
       expect(blinkEvents, hasLength(2));
     });
 
     test('reset clears blink tracking state', () {
-      recognizer.addFaceFrame(_frame(
-        timestamp: Duration(milliseconds: 0),
-        eyeBlinkLeft: 0.1, eyeBlinkRight: 0.1,
-      ));
-      recognizer.addFaceFrame(_frame(
-        timestamp: Duration(milliseconds: 100),
-        eyeBlinkLeft: 0.8, eyeBlinkRight: 0.8,
-      ));
+      recognizer.addFaceFrame(
+        _frame(
+          timestamp: Duration(milliseconds: 0),
+          eyeBlinkLeft: 0.1,
+          eyeBlinkRight: 0.1,
+        ),
+      );
+      recognizer.addFaceFrame(
+        _frame(
+          timestamp: Duration(milliseconds: 100),
+          eyeBlinkLeft: 0.8,
+          eyeBlinkRight: 0.8,
+        ),
+      );
 
       recognizer.reset();
 
       // After reset, the next open event doesn't complete a cycle
-      recognizer.addFaceFrame(_frame(
-        timestamp: Duration(milliseconds: 200),
-        eyeBlinkLeft: 0.1, eyeBlinkRight: 0.1,
-      ));
+      recognizer.addFaceFrame(
+        _frame(
+          timestamp: Duration(milliseconds: 200),
+          eyeBlinkLeft: 0.1,
+          eyeBlinkRight: 0.1,
+        ),
+      );
 
       expect(blinkEvents, isEmpty);
     });
