@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 The format loosely follows [Keep a Changelog](https://keepachangelog.com/)
 and the project adheres to [Semantic Versioning](https://semver.org/).
 
+## 0.2.3
+
+### Fixed
+- **Release APK crash (R8/ProGuard)**: R8 class-merging optimization broke MediaPipe's JNI native library loading via stack inspection, causing `ExceptionInInitializerError` at runtime. Added `-dontoptimize` and explicit `-keep` rules for MediaPipe, protobuf, and plugin classes in consumer ProGuard rules.
+- **Euler angles rotated 90°**: Camera sensor orientation (`sensorOrientation=270` on most front cameras) was sent from Dart but never applied on the native side. MediaPipe computed angles in raw sensor coordinates, causing pitch/yaw/roll to be misassigned (e.g. "head nod up" fired when turning right). Now compensated via `correctAnglesForRotation()` after Euler extraction.
+- **Distance "ok" range too narrow**: Default thresholds (`minDistanceRatio=0.20`, `maxDistanceRatio=0.60`) required holding the device uncomfortably close. Relaxed to `0.05`/`0.40` for comfortable arm-length usage.
+
+---
+
 ## 0.2.2
 
 ### Fixed

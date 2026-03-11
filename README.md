@@ -70,7 +70,7 @@ See [doc/architecture.md](doc/architecture.md) for full details.
 
 ## Status
 
-> **v0.2.0** — Full end-to-end face gesture detection on Android. Pass a `CameraController` and receive callbacks.
+> **v0.2.3** — Full end-to-end face gesture detection on Android with release build support.
 
 - [x] Data model with 52 blendshapes, landmarks, pose angles
 - [x] Platform interface (MethodChannel + EventChannel + processFrame)
@@ -80,4 +80,5 @@ See [doc/architecture.md](doc/architecture.md) for full details.
 - [x] Native Android — MediaPipe Face Landmarker (LIVE_STREAM + GPU delegate)
 - [x] Camera integration — `cameraController` parameter wires the full pipeline
 - [x] Example app — live camera preview with real-time gesture detection
+- [x] Release build — ProGuard rules, sensor orientation compensation
 - [ ] Native iOS
