@@ -77,8 +77,9 @@ class QualityGateRecognizer extends FaceGestureRecognizer {
 
   DistanceCategory _classifyDistance(double ratio) {
     if (ratio < configuration.minDistanceRatio) return DistanceCategory.tooFar;
-    if (ratio > configuration.maxDistanceRatio)
+    if (ratio > configuration.maxDistanceRatio) {
       return DistanceCategory.tooClose;
+    }
     return DistanceCategory.optimal;
   }
 

@@ -58,8 +58,9 @@ class FacePresenceRecognizer extends FaceGestureRecognizer {
         (frame.faceBoundingBox.width * frame.faceBoundingBox.height +
             1); // Simplified — always optimal for presence detection
     if (ratio < configuration.minDistanceRatio) return DistanceCategory.tooFar;
-    if (ratio > configuration.maxDistanceRatio)
+    if (ratio > configuration.maxDistanceRatio) {
       return DistanceCategory.tooClose;
+    }
     return DistanceCategory.optimal;
   }
 
