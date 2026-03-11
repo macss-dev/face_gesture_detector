@@ -7,6 +7,8 @@
 /// ```
 library face_gesture_detector;
 
+export 'src/configuration/face_gesture_configuration.dart';
+
 export 'src/model/face_blendshape.dart';
 export 'src/model/face_frame.dart';
 export 'src/model/face_landmark.dart';
