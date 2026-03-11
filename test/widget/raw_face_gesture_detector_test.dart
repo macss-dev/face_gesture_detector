@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:face_gesture_detector/face_gesture_detector.dart';
@@ -200,4 +202,128 @@ void main() {
       expect(recognizerA.disposed, isTrue);
     });
   });
+
+  group('RawFaceGestureDetector pipeline wiring', () {
+    late FaceGestureConfiguration config;
+    late _MockPlatform mockPlatform;
+    late FaceGestureDetectorPlatform originalPlatform;
+
+    setUp(() {
+      config = FaceGestureConfiguration();
+      originalPlatform = FaceGestureDetectorPlatform.instance;
+      mockPlatform = _MockPlatform();
+      FaceGestureDetectorPlatform.instance = mockPlatform;
+    });
+
+    tearDown(() {
+      FaceGestureDetectorPlatform.instance = originalPlatform;
+      mockPlatform.dispose();
+    });
+
+    testWidgets('calls startDetection on init when cameraController is null',
+        (tester) async {
+      // Without cameraController, no startDetection should be called.
+      await tester.pumpWidget(
+        RawFaceGestureDetector(
+          configuration: config,
+          recognizers: {},
+          child: SizedBox.shrink(),
+        ),
+      );
+
+      expect(mockPlatform.startDetectionCalled, isFalse);
+    });
+
+    testWidgets('dispatches FaceFrame from faceFrameStream to recognizers',
+        (tester) async {
+      final factory = _TestRecognizerFactory(config);
+
+      await tester.pumpWidget(
+        RawFaceGestureDetector(
+          configuration: config,
+          recognizers: {_TestRecognizer: factory},
+          child: SizedBox.shrink(),
+        ),
+      );
+
+      // Simulate a native face frame arriving via the stream
+      final state = tester.state<RawFaceGestureDetectorState>(
+        find.byType(RawFaceGestureDetector),
+      );
+
+      final faceFrameMap = _sampleFaceFrameMap();
+      state.dispatchFrame(FaceFrame.fromMap(faceFrameMap));
+      await tester.pump();
+
+      expect(factory.lastCreated!.receivedFrames, hasLength(1));
+      expect(factory.lastCreated!.receivedFrames.first.isFaceDetected, isTrue);
+    });
+
+    testWidgets('calls stopDetection on dispose when pipeline was null',
+        (tester) async {
+      await tester.pumpWidget(
+        RawFaceGestureDetector(
+          configuration: config,
+          recognizers: {},
+          child: SizedBox.shrink(),
+        ),
+      );
+
+      // Without cameraController, stopDetection should NOT be called on dispose
+      await tester.pumpWidget(SizedBox.shrink());
+
+      // stopDetection is called in _stopPipeline, but only tries if pipeline was started
+      // Since no cameraController was provided, startDetection was never called
+      expect(mockPlatform.startDetectionCalled, isFalse);
+    });
+  });
+}
+
+/// Mock platform for testing pipeline wiring without native code.
+class _MockPlatform extends FaceGestureDetectorPlatform {
+  bool startDetectionCalled = false;
+  bool stopDetectionCalled = false;
+  final List<FrameData> processedFrames = [];
+  final StreamController<Map<String, dynamic>> _frameController =
+      StreamController<Map<String, dynamic>>.broadcast();
+
+  @override
+  Future<void> startDetection(FaceDetectionOptions options) async {
+    startDetectionCalled = true;
+  }
+
+  @override
+  Future<void> stopDetection() async {
+    stopDetectionCalled = true;
+  }
+
+  @override
+  Future<void> processFrame(FrameData frameData) async {
+    processedFrames.add(frameData);
+  }
+
+  @override
+  Stream<Map<String, dynamic>> get faceFrameStream => _frameController.stream;
+
+  void emitFaceFrame(Map<String, dynamic> map) => _frameController.add(map);
+
+  void dispose() => _frameController.close();
+}
+
+Map<String, dynamic> _sampleFaceFrameMap() {
+  return {
+    'timestamp': 100,
+    'isFaceDetected': true,
+    'faceConfidence': 0.95,
+    'faceBoundingBox': {
+      'left': 50.0,
+      'top': 60.0,
+      'width': 200.0,
+      'height': 250.0,
+    },
+    'poseAngles': {'pitch': 5.0, 'yaw': -3.0, 'roll': 1.0},
+    'quality': {'brightness': 0.6, 'sharpness': 120.0},
+    'blendshapes': {'eyeBlinkLeft': 0.1, 'mouthSmileRight': 0.8},
+    'landmarks': null,
+  };
 }

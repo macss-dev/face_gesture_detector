@@ -1,3 +1,4 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/widgets.dart';
 
 import '../configuration/face_gesture_configuration.dart';
@@ -45,6 +46,9 @@ class FaceGestureDetector extends StatelessWidget {
   // ── Required ────────────────────────────────────────
   final FaceGestureConfiguration configuration;
 
+  // ── Camera ──────────────────────────────────────────
+  final CameraController? cameraController;
+
   // ── Family: Presence ────────────────────────────────
   final ValueChanged<FaceDetectedDetails>? onFaceDetected;
   final VoidCallback? onFaceLost;
@@ -84,6 +88,7 @@ class FaceGestureDetector extends StatelessWidget {
   const FaceGestureDetector({
     super.key,
     required this.configuration,
+    this.cameraController,
     this.onFaceDetected,
     this.onFaceLost,
     this.onQualityChanged,
@@ -180,6 +185,7 @@ class FaceGestureDetector extends StatelessWidget {
       configuration: configuration,
       recognizers: recognizers,
       controller: controller,
+      cameraController: cameraController,
       child: child,
     );
   }
