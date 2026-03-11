@@ -763,7 +763,7 @@ face_gesture_detector/
 
 ## Architectural Decision Records
 
-All key decisions are recorded in [docs/adr/](adr/):
+All key decisions are recorded in [doc/adr/](adr/):
 
 - [ADR-0002](adr/0002-platform-channel-over-native-camera.md) — Platform Channel over native CameraX
 - [ADR-0003](adr/0003-no-gesture-arena.md) — No gesture arena for facial gestures

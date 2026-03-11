@@ -1,7 +1,7 @@
 name: face_gesture_detector
-description: "A new Flutter plugin project."
-version: 0.0.1
-homepage:
+description: "A Flutter widget that translates camera frames and facial landmarks into high-level semantic callbacks, analogous to how GestureDetector translates pointer events into touch gestures."
+version: 0.1.0-dev
+repository: https://github.com/macss-dev/face_gesture_detector
 
 environment:
   sdk: ^3.10.8

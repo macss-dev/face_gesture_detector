@@ -63,7 +63,7 @@ Five-layer stack following Flutter's gesture system analogy:
 | 4 | `FaceGestureDetectorPlatform` | Platform interface |
 | 5 | Native (Kotlin + MediaPipe) | Camera + ML processing |
 
-See [docs/architecture.md](docs/architecture.md) for full details.
+See [doc/architecture.md](doc/architecture.md) for full details.
 
 ## Status
 
