@@ -1,5 +1,3 @@
-# face_gesture_detector
-
 A Flutter widget that translates camera frames and MediaPipe facial landmarks into high-level semantic callbacks — exactly as `GestureDetector` translates pointer events into touch gestures.
 
 ## Features
