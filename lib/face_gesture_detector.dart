@@ -49,4 +49,5 @@ export 'src/recognizer/raw_frame_recognizer.dart';
 export 'src/recognizer/smile_recognizer.dart';
 
 // Widget
+export 'src/widget/face_gesture_detector.dart';
 export 'src/widget/raw_face_gesture_detector.dart';
