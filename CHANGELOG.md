@@ -4,6 +4,36 @@ All notable changes to this project will be documented in this file.
 The format loosely follows [Keep a Changelog](https://keepachangelog.com/)
 and the project adheres to [Semantic Versioning](https://semver.org/).
 
+## 0.2.2
+
+### Fixed
+- Corrected CHANGELOG to accurately reflect the 0.2.0 and 0.2.1 release history
+
+---
+
+## 0.2.1
+
+### Fixed
+- **Deep-cast nested platform channel maps**: `FaceFrame.fromMap` now uses `Map<String, dynamic>.from()` for nested maps (`faceBoundingBox`, `poseAngles`, `quality`, `blendshapes`, `landmarks`) instead of direct `as Map<String, dynamic>` casts that failed at runtime with `_Map<Object?, Object?>`
+- **Face confidence always 0.00**: The `_neutral` blendshape score was incorrectly used as face detection confidence; now reports `1.0` when a face is detected (MediaPipe already filters by `minFaceDetectionConfidence`)
+
+---
+
+## 0.2.0
+
+### Added
+- **Camera integration**: `FaceGestureDetector` accepts an optional `cameraController` parameter, wiring the full camera → native → recognizer pipeline automatically
+- **Real-time detection**: `RawFaceGestureDetector` manages `startDetection`, `processFrame`, `faceFrameStream`, and `stopDetection` lifecycle when a `CameraController` is provided
+- **Example app**: Fully functional demo with live front-camera preview, face detection indicator, event log, and all 10 gesture callbacks
+- **Integration tests**: Camera pipeline tests on physical device (camera init, processFrame, faceFrameStream)
+
+### Changed
+- `cameraController` parameter added to `FaceGestureDetector` and `RawFaceGestureDetector` (optional — `null` preserves test/manual mode)
+- `camera: ^0.11.1` added as a dependency
+- Example app requires `android.permission.CAMERA`
+
+---
+
 ## 0.1.0-dev
 
 ### Added

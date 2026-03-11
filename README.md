@@ -15,14 +15,16 @@ A Flutter widget that translates camera frames and MediaPipe facial landmarks in
 ## Quick Start
 
 ```dart
+import 'package:camera/camera.dart';
 import 'package:face_gesture_detector/face_gesture_detector.dart';
 
 // Minimal: presence detection only
 FaceGestureDetector(
   configuration: FaceGestureConfiguration(),
+  cameraController: cameraController,
   onFaceDetected: (details) => print('Face found: ${details.confidence}'),
   onFaceLost: () => print('Face lost'),
-  child: CameraPreview(controller: cameraController),
+  child: CameraPreview(cameraController),
 )
 
 // Full: all gesture families
@@ -34,6 +36,7 @@ FaceGestureDetector(
     sustainedGestureDuration: Duration(milliseconds: 400),
     frameSkipCount: 2,
   ),
+  cameraController: cameraController,
   controller: detectorController,
   onFaceDetected: (d) => handleFace(d),
   onFaceLost: () => handleLost(),
@@ -47,7 +50,7 @@ FaceGestureDetector(
   onDistanceChanged: (d) => handleDistance(d),
   onQualityChanged: (d) => handleQuality(d),
   onFaceFrame: (frame) => handleRawFrame(frame),
-  child: CameraPreview(controller: cameraController),
+  child: CameraPreview(cameraController),
 )
 ```
 
@@ -67,7 +70,7 @@ See [doc/architecture.md](doc/architecture.md) for full details.
 
 ## Status
 
-> **v0.1.0-dev** — Dart layers (1-4) and Android native layer (5) complete. iOS pending.
+> **v0.2.0** — Full end-to-end face gesture detection on Android. Pass a `CameraController` and receive callbacks.
 
 - [x] Data model with 52 blendshapes, landmarks, pose angles
 - [x] Platform interface (MethodChannel + EventChannel + processFrame)
@@ -75,4 +78,6 @@ See [doc/architecture.md](doc/architecture.md) for full details.
 - [x] Layer 2 widget with frame routing, recognizer diff, controller
 - [x] Layer 1 facade with callback-to-recognizer mapping
 - [x] Native Android — MediaPipe Face Landmarker (LIVE_STREAM + GPU delegate)
+- [x] Camera integration — `cameraController` parameter wires the full pipeline
+- [x] Example app — live camera preview with real-time gesture detection
 - [ ] Native iOS
