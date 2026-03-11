@@ -33,11 +33,11 @@
 
 ### Exit Criteria
 
-- [ ] Developer can wrap `CameraPreview` with `FaceGestureDetector` and receive callbacks
-- [ ] Null callbacks produce zero recognizer overhead
-- [ ] All quality gates from PAD state-of-the-art have a corresponding callback
-- [ ] Recognizers are unit-testable with synthetic FaceFrames (no device required)
-- [ ] Example app demonstrates a complete liveness challenge flow
+- [ ] Developer can wrap `CameraPreview` with `FaceGestureDetector` and receive callbacks — *pending: requires `camera` package integration with a real CameraController*
+- [x] Null callbacks produce zero recognizer overhead — callbacks-as-subscription implemented; `null` callback = recognizer not created
+- [x] All quality gates from PAD state-of-the-art have a corresponding callback — brightness, sharpness, distance, pose, eyes, mouth all mapped
+- [x] Recognizers are unit-testable with synthetic FaceFrames (no device required) — 117 Dart unit tests pass with synthetic data
+- [ ] Example app demonstrates a complete liveness challenge flow — *pending: current example validates integration; full challenge UI deferred*
 
 ---
 
