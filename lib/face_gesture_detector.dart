@@ -34,4 +34,5 @@ export 'src/platform/method_channel_face_gesture_detector.dart';
 
 // Recognizer
 export 'src/recognizer/face_gesture_recognizer.dart';
+export 'src/recognizer/face_presence_recognizer.dart';
 export 'src/recognizer/raw_frame_recognizer.dart';
