@@ -67,9 +67,8 @@ void main() {
     );
 
     test('fires onDistanceChanged with tooClose for large bounding box', () {
-      // Very large face → too close. Ratio = (800*1200) / (1080*1920) ≈ 0.46
-      // With defaults: maxDistanceRatio = 0.60, this is still optimal.
-      // Need even bigger: (900*1500) / (1080*1920) ≈ 0.65
+      // Very large face → too close. Ratio = (900*1500) / (1080*1920) ≈ 0.65
+      // With defaults: maxDistanceRatio = 0.40, this exceeds it → tooClose.
       recognizer.addFaceFrame(_frame(bboxWidth: 900, bboxHeight: 1500));
 
       expect(distanceEvents, hasLength(1));
@@ -77,10 +76,8 @@ void main() {
     });
 
     test('fires onDistanceChanged with optimal for medium bounding box', () {
-      // Medium face. Ratio = (400*500) / (1080*1920) ≈ 0.096
-      // That's < 0.20 → tooFar. Let's use bigger: (500*700)/(1080*1920) = 0.169 → tooFar
-      // Need:  0.20 * 1080 * 1920 = 414,720; sqrt ≈ 644. Use 650x650:
-      // (650*650)/(1080*1920) = 422500/2073600 = 0.204 → optimal
+      // Medium face. Ratio = (650*650) / (1080*1920) = 422500/2073600 ≈ 0.204
+      // With defaults: minDistanceRatio = 0.05, maxDistanceRatio = 0.40 → optimal.
       recognizer.addFaceFrame(_frame(bboxWidth: 650, bboxHeight: 650));
 
       expect(distanceEvents, hasLength(1));

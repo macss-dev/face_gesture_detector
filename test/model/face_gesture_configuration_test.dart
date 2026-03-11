@@ -10,8 +10,8 @@ void main() {
       expect(config.faceDetectionConfidence, 0.5);
 
       // Distance
-      expect(config.minDistanceRatio, 0.20);
-      expect(config.maxDistanceRatio, 0.60);
+      expect(config.minDistanceRatio, 0.05);
+      expect(config.maxDistanceRatio, 0.40);
 
       // Gesture thresholds
       expect(config.headTurnYawThreshold, 25.0);
@@ -45,7 +45,7 @@ void main() {
       expect(config.sustainedGestureDuration, Duration(milliseconds: 200));
 
       // Non-overridden values remain at defaults
-      expect(config.minDistanceRatio, 0.20);
+      expect(config.minDistanceRatio, 0.05);
       expect(config.headTurnYawThreshold, 25.0);
     });
   });
