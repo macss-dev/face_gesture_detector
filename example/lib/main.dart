@@ -99,7 +99,8 @@ class _FaceDetectorDemoState extends State<FaceDetectorDemo>
   }
 
   void _addEvent(String event) {
-    final entry = '${DateTime.now().toIso8601String().substring(11, 19)} $event';
+    final entry =
+        '${DateTime.now().toIso8601String().substring(11, 19)} $event';
     debugPrint('[FaceGesture] $entry');
     setState(() {
       _events.insert(0, entry);
@@ -167,33 +168,31 @@ class _FaceDetectorDemoState extends State<FaceDetectorDemo>
       onFaceDetected: (details) {
         if (!_hasFace) {
           _hasFace = true;
-          _addEvent(
-            'Face detected (${(details.confidence * 100).toInt()}%)',
-          );
+          _addEvent('Face detected (${(details.confidence * 100).toInt()}%)');
         }
       },
       onFaceLost: () {
         _hasFace = false;
         _addEvent('Face lost');
       },
-      onBlinkDetected: (details) => _addEvent(
-        'Blink (${details.blinkDuration.inMilliseconds}ms)',
-      ),
+      onBlinkDetected: (details) =>
+          _addEvent('Blink (${details.blinkDuration.inMilliseconds}ms)'),
       onSmileDetected: (details) => _addEvent(
         'Smile (intensity: ${details.intensity.toStringAsFixed(2)})',
       ),
-      onHeadTurnDetected: (details) =>
-          _addEvent('Head turn ${details.direction.name}'),
-      onHeadNodDetected: (details) =>
-          _addEvent('Head nod ${details.direction.name}'),
-      onBrowRaised: (details) => _addEvent(
-        'Brow raised (${details.intensity.toStringAsFixed(2)})',
+      onHeadTurnDetected: (details) => _addEvent(
+        'Head turn ${details.direction.name} (yaw=${details.yawAngle.toStringAsFixed(1)})',
       ),
-      onMouthOpened: (details) => _addEvent(
-        'Mouth open (${details.openness.toStringAsFixed(2)})',
+      onHeadNodDetected: (details) => _addEvent(
+        'Head nod ${details.direction.name} (pitch=${details.pitchAngle.toStringAsFixed(1)})',
       ),
-      onPoseChanged: (details) =>
-          _addEvent('Pose: frontal=${details.isFrontal}'),
+      onBrowRaised: (details) =>
+          _addEvent('Brow raised (${details.intensity.toStringAsFixed(2)})'),
+      onMouthOpened: (details) =>
+          _addEvent('Mouth open (${details.openness.toStringAsFixed(2)})'),
+      onPoseChanged: (details) => _addEvent(
+        'Pose: p=${details.angles.pitch.toStringAsFixed(1)} y=${details.angles.yaw.toStringAsFixed(1)} r=${details.angles.roll.toStringAsFixed(1)}',
+      ),
       onDistanceChanged: (details) =>
           _addEvent('Distance: ${details.category.name}'),
       child: CameraPreview(camera),

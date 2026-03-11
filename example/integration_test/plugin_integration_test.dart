@@ -132,70 +132,69 @@ void main() {
       expect(framesProcessed, greaterThanOrEqualTo(3));
     });
 
-    testWidgets(
-      'faceFrameStream emits data from real camera',
-      (WidgetTester tester) async {
-        final cameras = await availableCameras();
-        if (cameras.isEmpty) return;
+    testWidgets('faceFrameStream emits data from real camera', (
+      WidgetTester tester,
+    ) async {
+      final cameras = await availableCameras();
+      if (cameras.isEmpty) return;
 
-        final front = cameras.firstWhere(
-          (c) => c.lensDirection == CameraLensDirection.front,
-          orElse: () => cameras.first,
+      final front = cameras.firstWhere(
+        (c) => c.lensDirection == CameraLensDirection.front,
+        orElse: () => cameras.first,
+      );
+      final controller = CameraController(
+        front,
+        ResolutionPreset.low,
+        enableAudio: false,
+        imageFormatGroup: ImageFormatGroup.nv21,
+      );
+
+      await controller.initialize();
+
+      final platform = FaceGestureDetectorPlatform.instance;
+      final options = FaceDetectionOptions.fromConfiguration(
+        FaceGestureConfiguration(),
+      );
+      await platform.startDetection(options);
+
+      final received = <Map<String, dynamic>>[];
+      final sub = platform.faceFrameStream.listen(received.add);
+
+      await controller.startImageStream((CameraImage image) async {
+        final totalBytes = image.planes.fold<int>(
+          0,
+          (sum, plane) => sum + plane.bytes.length,
         );
-        final controller = CameraController(
-          front,
-          ResolutionPreset.low,
-          enableAudio: false,
-          imageFormatGroup: ImageFormatGroup.nv21,
+        final buffer = Uint8List(totalBytes);
+        var offset = 0;
+        for (final plane in image.planes) {
+          buffer.setRange(offset, offset + plane.bytes.length, plane.bytes);
+          offset += plane.bytes.length;
+        }
+
+        await platform.processFrame(
+          FrameData(
+            bytes: buffer,
+            width: image.width,
+            height: image.height,
+            rotation: controller.description.sensorOrientation,
+          ),
         );
+      });
 
-        await controller.initialize();
+      // Give the pipeline time to produce results.
+      await Future<void>.delayed(const Duration(seconds: 5));
 
-        final platform = FaceGestureDetectorPlatform.instance;
-        final options = FaceDetectionOptions.fromConfiguration(
-          FaceGestureConfiguration(),
-        );
-        await platform.startDetection(options);
+      await controller.stopImageStream();
+      await Future<void>.delayed(const Duration(seconds: 1));
+      await sub.cancel();
+      await platform.stopDetection();
+      await controller.dispose();
 
-        final received = <Map<String, dynamic>>[];
-        final sub = platform.faceFrameStream.listen(received.add);
-
-        await controller.startImageStream((CameraImage image) async {
-          final totalBytes = image.planes.fold<int>(
-            0,
-            (sum, plane) => sum + plane.bytes.length,
-          );
-          final buffer = Uint8List(totalBytes);
-          var offset = 0;
-          for (final plane in image.planes) {
-            buffer.setRange(offset, offset + plane.bytes.length, plane.bytes);
-            offset += plane.bytes.length;
-          }
-
-          await platform.processFrame(
-            FrameData(
-              bytes: buffer,
-              width: image.width,
-              height: image.height,
-              rotation: controller.description.sensorOrientation,
-            ),
-          );
-        });
-
-        // Give the pipeline time to produce results.
-        await Future<void>.delayed(const Duration(seconds: 5));
-
-        await controller.stopImageStream();
-        await Future<void>.delayed(const Duration(seconds: 1));
-        await sub.cancel();
-        await platform.stopDetection();
-        await controller.dispose();
-
-        // Accept ≥0 to avoid flakiness — whether face data arrives depends
-        // on what the camera sees. The key assertion is: no crash.
-        expect(received, isA<List<Map<String, dynamic>>>());
-      },
-    );
+      // Accept ≥0 to avoid flakiness — whether face data arrives depends
+      // on what the camera sees. The key assertion is: no crash.
+      expect(received, isA<List<Map<String, dynamic>>>());
+    });
   });
 
   // ── Platform API tests (no camera needed) ────────────────────────

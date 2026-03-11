@@ -220,8 +220,9 @@ void main() {
       mockPlatform.dispose();
     });
 
-    testWidgets('calls startDetection on init when cameraController is null',
-        (tester) async {
+    testWidgets('calls startDetection on init when cameraController is null', (
+      tester,
+    ) async {
       // Without cameraController, no startDetection should be called.
       await tester.pumpWidget(
         RawFaceGestureDetector(
@@ -234,8 +235,9 @@ void main() {
       expect(mockPlatform.startDetectionCalled, isFalse);
     });
 
-    testWidgets('dispatches FaceFrame from faceFrameStream to recognizers',
-        (tester) async {
+    testWidgets('dispatches FaceFrame from faceFrameStream to recognizers', (
+      tester,
+    ) async {
       final factory = _TestRecognizerFactory(config);
 
       await tester.pumpWidget(
@@ -259,8 +261,9 @@ void main() {
       expect(factory.lastCreated!.receivedFrames.first.isFaceDetected, isTrue);
     });
 
-    testWidgets('calls stopDetection on dispose when pipeline was null',
-        (tester) async {
+    testWidgets('calls stopDetection on dispose when pipeline was null', (
+      tester,
+    ) async {
       await tester.pumpWidget(
         RawFaceGestureDetector(
           configuration: config,
