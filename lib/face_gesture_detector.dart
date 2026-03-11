@@ -39,3 +39,4 @@ export 'src/recognizer/face_presence_recognizer.dart';
 export 'src/recognizer/pose_recognizer.dart';
 export 'src/recognizer/quality_gate_recognizer.dart';
 export 'src/recognizer/raw_frame_recognizer.dart';
+export 'src/recognizer/smile_recognizer.dart';
