@@ -6,3 +6,5 @@
 /// import 'package:face_gesture_detector/face_gesture_detector.dart';
 /// ```
 library face_gesture_detector;
+
+export 'src/model/face_blendshape.dart';
