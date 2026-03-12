@@ -20,7 +20,7 @@ dependencies:
   face_gesture_detector:
     path: ../
 
-  camera: ^0.11.1
+  camera: ^0.12.0
 
 dev_dependencies:
   integration_test:
